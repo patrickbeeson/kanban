@@ -9,8 +9,13 @@ const PATHS = {
     build: path.join(__dirname, 'build')
 };
 
+process.env.BABEL_ENV = TARGET;
+
 const common  = {
     entry: PATHS.app,
+    resolve: {
+        extensions: ['', '.js', '.jsx']
+    },
     output: {
         path: PATHS.build,
         filename: 'bundle.js'
@@ -21,6 +26,15 @@ const common  = {
                 test: /\.scss$/,
                 loaders: ['style', 'css', 'sass'],
                 includes: PATHS.app
+            },
+            {
+                test: /\.jsx$/,
+                loader: 'babel',
+                query: {
+                    cacheDirectory: true,
+                    presets: ['react', 'es2015', 'survivejs-kanban']
+                },
+                include: PATHS.app
             }
         ]
     }
