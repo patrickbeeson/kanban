@@ -1,6 +1,8 @@
 const path = require('path');
 const merge = require('webpack-merge');
 const webpack = require('webpack');
+const autoprefixer = require('autoprefixer');
+const precss = require('precss');
 
 const TARGET = process.env.npm_lifecycle_event;
 
@@ -23,8 +25,8 @@ const common  = {
     module: {
         loaders: [
             {
-                test: /\.scss$/,
-                loaders: ['style', 'css', 'sass'],
+                test: /\.css$/,
+                loaders: ['style', 'css', 'postcss'],
                 includes: PATHS.app
             },
             {
@@ -37,6 +39,9 @@ const common  = {
                 include: PATHS.app
             }
         ]
+    },
+    postcss: () => {
+        return [autoprefixer, precss];
     }
 };
 
